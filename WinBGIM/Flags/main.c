@@ -27,10 +27,10 @@ int main()
 
 void drawTopRectangle()
 {
-    setcolor(RED);
+    setcolor(COLOR(255,128,0));
 	rectangle(100,100,450,150);
-	setfillstyle(SOLID_FILL,RED);
-	floodfill(101,101,RED);
+	setfillstyle(SOLID_FILL,COLOR(255,128,0));
+	floodfill(101,101,COLOR(255,128,0));
 }
 
 void drawMiddleRectangle()
