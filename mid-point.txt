@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<graphics.h>
+#include<math.h>
+#include<conio.h>
+#define MAX 10
+ 
+void swap(int* a,int* b)
+{
+	int t=*a;
+	*a=*b;
+	*b=t;
+}
+ 
+void midpointline(int x1,int y1,int x2,int y2)
+{
+	int dx,dy,d,incry,incre,incrne,slopegt1=0;
+	dx=abs(x1-x2);dy=abs(y1-y2);
+	if(dy>dx)
+	{
+		swap(&x1,&y1);
+		swap(&x2,&y2);
+		swap(&dx,&dy);
+		slopegt1=1;
+	}
+	if(x1>x2)
+	{
+		swap(&x1,&x2);
+		swap(&y1,&y2);
+	}
+	if(y1>y2)
+		incry=-1;
+	else
+		incry=1;
+	d=2*dy-dx;
+	incre=2*dy;
+	incrne=2*(dy-dx);
+	while(x1<x2)
+	{
+		if(d<=0)
+			d+=incre;
+		else
+		{
+			d+=incrne;
+			y1+=incry;
+		}
+		x1++;
+		if(slopegt1)
+			putpixel(y1,x1,WHITE);
+		else
+			putpixel(x1,y1,WHITE);
+	}
+}
+ 
+void poly_line(int x[MAX],int y[MAX],int n,int thick)
+{
+	int i=0,j=0;
+	for(i=0;i<n-1;i++)
+		for(j=0;j<thick;j++)
+			midpointline(x[i]+j,y[i],x[i+1]+j,y[i+1]);
+}
+ 
+int main()
+{
+	int gd=DETECT,gm,thick;
+	int x[MAX],y[MAX],n,i;
+	printf("Number of points:");
+	scanf("%d",&n);
+ 
+	printf("Enter x and y co-ord:");
+	for(i=0;i<n;i++)
+		scanf("%d %d",&x[i],&y[i]);
+	initgraph(&gd,&gm,"..\\bgi");
+	if(n==1)
+	{
+		for(i=0;i<n;i++)
+			putpixel(x[i],y[i],YELLOW);
+	}
+	else
+	{
+		poly_line(x,y,n,1);
+	}
+	getch();
+	closegraph();
+	return 0;
+}
